@@ -1,0 +1,10 @@
+name: Minigame_v2
+version: ${version}
+main: com.matthew.plugin.Minigame
+description: ${desc}
+authors:
+  - Matthew (GoofIt/Mahht)
+
+api-version: 1.21
+
+commands:
