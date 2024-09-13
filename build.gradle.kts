@@ -1,29 +1,35 @@
 plugins {
     id("java")
+    `java-library`
 }
 
 group = "com.matthew.plugin"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/")
-}
 
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.mockito:mockito-core:5.11.0")
+subprojects {
+    apply(plugin = "java-library")
 
-    compileOnly("org.projectlombok:lombok:1.18.30")
+    repositories {
+        mavenCentral()
+        maven("https://repo.papermc.io/repository/maven-public/")
+    }
 
-    annotationProcessor("org.projectlombok:lombok:1.18.30")
-}
+    dependencies {
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+        testImplementation("org.junit.jupiter:junit-jupiter")
+        testImplementation("org.mockito:mockito-core:5.11.0")
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
-}
+        compileOnly("org.projectlombok:lombok:1.18.30")
 
-tasks.test {
-    useJUnitPlatform()
+        annotationProcessor("org.projectlombok:lombok:1.18.30")
+    }
+
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    }
+
+    tasks.test {
+        useJUnitPlatform()
+    }
 }

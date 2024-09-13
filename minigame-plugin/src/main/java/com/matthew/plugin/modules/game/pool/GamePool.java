@@ -1,9 +1,10 @@
-package com.matthew.plugin.pool;
+package com.matthew.plugin.modules.game.pool;
 
-import com.matthew.plugin.Game;
+import com.matthew.plugin.modules.game.Game;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class GamePool {
 

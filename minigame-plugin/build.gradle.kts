@@ -8,17 +8,14 @@ version = "1.0-SNAPSHOT"
 val pluginDescription = "Minigame Plugin."
 
 repositories {
-    mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/")
+
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
 
     implementation(project(":minigame-common"))
-
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation(project(":minigame-api"))
 }
 
 java {

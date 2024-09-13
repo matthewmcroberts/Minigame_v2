@@ -1,0 +1,15 @@
+prefix: "<blue>>></blue> "
+
+noperm: "<red>You do not have permission to perform this command.</red>"
+
+
+# --------------------- Commands ---------------------
+
+#
+# Common
+#
+
+usage: "<red>Incorrect usage.</red>"
+
+# <0> = Target player's name
+playernotfound: "<gray>Player</gray> <yellow>'<0>'</yellow> <gray>not found.</gray>"
