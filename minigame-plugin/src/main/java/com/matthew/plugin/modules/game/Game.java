@@ -1,4 +1,16 @@
 package com.matthew.plugin.modules.game;
 
-public abstract class Game {
+import com.matthew.plugin.IGame;
+
+public class Game implements IGame {
+
+    @Override
+    public boolean isPvp() {
+        return false;
+    }
+
+    @Override
+    public void setPvp(boolean pvp) {
+
+    }
 }
