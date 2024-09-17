@@ -1,25 +1,63 @@
 package com.matthew.plugin.modules.game.pool;
 
+import com.matthew.plugin.Minigame;
 import com.matthew.plugin.modules.game.Game;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Getter
 public class GamePool {
 
-    //number of games that must always exist in the pool when GamePool is initialized
+    private static GamePool instance;
+
+    @Setter
     private int minCount;
 
-    private List<Game> instances = new ArrayList<>();
+    private final List<Game> instances;
 
-    /*
-    TODO:
-     Methods:
-      populate
-      initNewGame
-      forceKillGame
-      kill (kill GamePool)
-     */
+    private GamePool(int minCount) {
+        this.minCount = minCount;
+        instances = new ArrayList<>();
+    }
 
+    public static GamePool getInstance() {
+        if (instance == null) {
+            instance = new GamePool(3);
+        }
+        return instance;
+    }
+
+    public void populate() {
+        if(!instances.isEmpty()) {
+            return;
+        }
+
+        for (int i = 0; i < minCount; i++) {
+            Game game = new Game();
+            instances.add(game);
+        }
+    }
+
+    public Game initNewGame() {
+        Game game = new Game();
+        instances.add(game);
+        return game;
+    }
+
+    public void killGame(Game game) {
+        if(!instances.contains(game)) {
+            Minigame.getInstance().getLogger().severe("Could not kill existing game because game instance was not " +
+                    "found in pool. It is possible that the game instance was not properly initialized with pool.");
+            return;
+        }
+        game.kill();
+    }
+
+    public void kill() {
+        instances.forEach(Game::kill);
+        instances.clear();
+    }
 }

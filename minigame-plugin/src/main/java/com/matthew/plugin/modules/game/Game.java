@@ -13,4 +13,14 @@ public class Game implements IGame {
     public void setPvp(boolean pvp) {
 
     }
+
+    @Override
+    public boolean end() {
+        return false;
+    }
+
+    @Override
+    public boolean kill() {
+        return false;
+    }
 }
