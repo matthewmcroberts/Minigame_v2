@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "com.matthew.plugin"
@@ -36,5 +37,14 @@ tasks {
                 "desc" to pluginDescription
             )
         }
+    }
+
+    shadowJar {
+        archiveClassifier.set("")
+        configurations = listOf(project.configurations.runtimeClasspath.get())
+    }
+
+    build {
+        dependsOn(shadowJar)
     }
 }
