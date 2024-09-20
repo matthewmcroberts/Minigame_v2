@@ -1,12 +1,17 @@
 package com.matthew.plugin.modules.phases;
 
-//Could possibly make this an inner class for PhaseModule
 
 import com.matthew.plugin.modules.phases.state.BasePhase;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Special thanks to @BattleDash for inspiring the PhaseMachine approach to manage game states.
+ *
+ * While the concept originated from the developer mentioned, the following implementation
+ * has been crafted by the author.
+ */
 public class PhaseMachine {
 
     private static PhaseMachine instance;
