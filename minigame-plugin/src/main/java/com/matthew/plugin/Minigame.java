@@ -1,6 +1,7 @@
 package com.matthew.plugin;
 
 import com.matthew.plugin.modules.game.GameModule;
+import com.matthew.plugin.modules.game.pool.GamePool;
 import com.matthew.plugin.modules.manager.ModuleManager;
 import com.matthew.plugin.modules.messages.MessageModule;
 import lombok.Getter;
@@ -10,6 +11,8 @@ public class Minigame extends JavaPlugin {
 
     @Getter
     private static Minigame instance;
+
+    private GamePool pool;
 
     private ModuleManager moduleManager;
 
@@ -37,6 +40,9 @@ public class Minigame extends JavaPlugin {
         moduleManager.setUp();
 
         getLogger().info("Minigame plugin enabled");
+
+        GameModule gameModule = moduleManager.getRegisteredModule(GameModule.class);
+        gameModule.initNewGame(new TeamDeathMatchGame());
     }
 
     @Override

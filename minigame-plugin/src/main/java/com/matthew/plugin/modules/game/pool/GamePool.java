@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 @Getter
 public class GamePool {
@@ -18,9 +19,12 @@ public class GamePool {
 
     private final List<Game> instances;
 
-    private GamePool(int minCount) {
+    private final Function<GamePool, Game> gameFunction;
+
+    private GamePool(int minCount, Function<GamePool, Game> gameFunction) {
         this.minCount = minCount;
         instances = new ArrayList<>();
+        this.gameFunction = gameFunction;
     }
 
     public static GamePool getInstance() {
@@ -31,18 +35,17 @@ public class GamePool {
     }
 
     public void populate() {
-        if(!instances.isEmpty()) {
-            return;
-        }
-
-        for (int i = 0; i < minCount; i++) {
-            Game game = new Game();
-            instances.add(game);
-        }
+//        if(!instances.isEmpty()) {
+//            return;
+//        }
+//
+//        for (int i = 0; i < minCount; i++) {
+//            Game game = new Game();
+//            instances.add(game);
+//        }
     }
 
-    public Game initNewGame() {
-        Game game = new Game();
+    public Game initNewGame(Game game) {
         instances.add(game);
         return game;
     }

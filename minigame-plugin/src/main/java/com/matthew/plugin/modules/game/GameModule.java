@@ -10,8 +10,8 @@ public class GameModule implements Module {
     public GameModule() {
     }
 
-    public Game initNewGame() {
-        return pool.initNewGame();
+    public Game initNewGame(Game game) {
+        return pool.initNewGame(game);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.matthew.plugin.modules.phases.state;
+package com.matthew.plugin.phases.state;
 
 public class CountdownPhase extends BasePhase {
 }

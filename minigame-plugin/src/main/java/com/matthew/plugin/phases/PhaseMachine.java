@@ -1,7 +1,6 @@
-package com.matthew.plugin.modules.phases;
+package com.matthew.plugin.phases;
 
-
-import com.matthew.plugin.modules.phases.state.BasePhase;
+import com.matthew.plugin.phases.state.BasePhase;
 
 import java.util.ArrayList;
 import java.util.List;
