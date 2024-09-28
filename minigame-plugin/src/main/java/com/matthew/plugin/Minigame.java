@@ -33,16 +33,13 @@ public class Minigame extends JavaPlugin {
         //Register modules
         getLogger().info("Registering Modules...");
         moduleManager.registerModule(new MessageModule(this))
-                        .registerModule(new GameModule());
+                        .registerModule(new GameModule(this));
 
         //Setup modules
         getLogger().info("Setting up Modules...");
         moduleManager.setUp();
 
         getLogger().info("Minigame plugin enabled");
-
-        GameModule gameModule = moduleManager.getRegisteredModule(GameModule.class);
-        gameModule.initNewGame(new TeamDeathMatchGame());
     }
 
     @Override

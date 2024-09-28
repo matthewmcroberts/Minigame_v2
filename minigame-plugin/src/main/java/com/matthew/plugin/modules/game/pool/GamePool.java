@@ -12,8 +12,6 @@ import java.util.function.Function;
 @Getter
 public class GamePool {
 
-    private static GamePool instance;
-
     @Setter
     private int minCount;
 
@@ -21,39 +19,30 @@ public class GamePool {
 
     private final Function<GamePool, Game> gameFunction;
 
-    private GamePool(int minCount, Function<GamePool, Game> gameFunction) {
+    public GamePool(int minCount, Function<GamePool, Game> gameFunction) {
         this.minCount = minCount;
         instances = new ArrayList<>();
         this.gameFunction = gameFunction;
     }
 
-    public static GamePool getInstance() {
-        if (instance == null) {
-            instance = new GamePool(3);
-        }
-        return instance;
-    }
-
     public void populate() {
-//        if(!instances.isEmpty()) {
-//            return;
-//        }
-//
-//        for (int i = 0; i < minCount; i++) {
-//            Game game = new Game();
-//            instances.add(game);
-//        }
+        if (!instances.isEmpty()) {
+            return;
+        }
+
+        for (int i = 0; i < minCount; i++) {
+            initNewGame();
+        }
     }
 
-    public Game initNewGame(Game game) {
-        instances.add(game);
-        return game;
+    public boolean initNewGame() {
+        return instances.add(gameFunction.apply(this));
     }
 
     public void killGame(Game game) {
-        if(!instances.contains(game)) {
+        if (!instances.contains(game)) {
             Minigame.getInstance().getLogger().severe("Could not kill existing game because game instance was not " +
-                    "found in pool. It is possible that the game instance was not properly initialized with pool.");
+                    "found in pool. It is possible that the game instance was not properly initialized with pool. Contact Developer.");
             return;
         }
         game.kill();
