@@ -14,9 +14,9 @@ public class GameModule implements Module {
 
     private final JavaPlugin plugin;
 
-    public Game initNewGame() {
-        return pool.initNewGame();
-    }
+//    public Game initNewGame() {
+//        return pool.initNewGame();
+//    }
 
     @Override
     public void setUp() {
