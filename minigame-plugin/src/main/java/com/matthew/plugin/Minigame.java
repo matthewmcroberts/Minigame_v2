@@ -39,6 +39,14 @@ public class Minigame extends JavaPlugin {
         getLogger().info("Setting up Modules...");
         moduleManager.setUp();
 
+        //Init game pool(s)
+        getLogger().info("Initializing game pool(s)...");
+        pool = new GamePool(1, TeamDeathMatchGame::new);
+
+        //Populate game pool(s)
+        getLogger().info("Populating game pool(s)...");
+        pool.populate();
+
         getLogger().info("Minigame plugin enabled");
     }
 

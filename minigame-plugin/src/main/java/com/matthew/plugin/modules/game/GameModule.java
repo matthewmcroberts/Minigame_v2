@@ -21,8 +21,6 @@ public class GameModule implements Module {
     @Override
     public void setUp() {
         plugin.getLogger().info("Setting up game pool...");
-        pool = new GamePool(1, TeamDeathMatchGame::new);
-        pool.populate();
     }
 
     @Override
