@@ -1,6 +1,15 @@
 package com.matthew.plugin.modules.game;
 
+import lombok.Getter;
+
+@Getter
 public abstract class Game {
+
+    private final GameArena arena;
+
+    public Game() {
+        arena = new GameArena();
+    }
 
     public boolean isPvp() {
         return false;
@@ -17,4 +26,6 @@ public abstract class Game {
     public boolean kill() {
         return false;
     }
+
+    public abstract void start();
 }

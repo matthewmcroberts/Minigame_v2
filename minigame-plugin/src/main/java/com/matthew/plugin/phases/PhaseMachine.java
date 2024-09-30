@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Special thanks to "GameManager", a repository owned by @BattleDash, for inspiring the PhaseMachine approach to manage
+ * <p>Special thanks to "GameManager", a repository owned by @BattleDash, for inspiring the PhaseMachine approach to manage
  * game states.
- * <a href="https://github.com/BattleDash/GameManager">Repo found here</a>
+ * <a href="https://github.com/BattleDash/GameManager">Repo found here</a></p>
  *
- * The following implementation contains mixed code written by the author "Matthew (GoofIt/Mahht)" and inspiration above.
+ * <p>The following implementation contains mixed code written by the author "Matthew (GoofIt/Mahht)" and inspiration above.</p>
  */
 public class PhaseMachine {
 
@@ -56,16 +56,19 @@ public class PhaseMachine {
         skipping = true;
     }
 
-    public void onStart() {
-
+    public void start() {
+        //index first phase and call its onStart method
+        //schedule repeating task for update method
     }
 
-    public void onUpdate() {
-
+    //Will need to keep in mind synchronization of threads and conflicting concurrent main thread modifications
+    public void update() {
+        //index current phase and call onUpdate
+        //Also determine if current phase is ready to proceed to next phase or skip boolean is set to true
     }
 
-    public void onEnd() {}
-
-    private void canEnd() {}
-
+    public void end() {
+        //index current phase and call onEnd
+        //Stop repeating task
+    }
 }
