@@ -8,16 +8,19 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.logging.Logger;
 
 @Getter
 public class GamePool {
 
-    @Setter
-    private int minCount;
+    private final Logger logger = Minigame.getInstance().getLogger();
 
     private final List<Game> instances;
 
     private final Function<GamePool, Game> gameFunction;
+
+    @Setter
+    private int minCount;
 
     public GamePool(int minCount, Function<GamePool, Game> gameFunction) {
         this.minCount = minCount;
@@ -27,14 +30,14 @@ public class GamePool {
 
     public void populate() {
         if (instances.size() >= minCount) {
-            Minigame.getInstance().getLogger().info("Could not populate game pool due to min count already reached");
+            logger.info("Could not populate game pool due to min count already reached");
             return;
         }
 
         for (int i = 0; i < minCount; i++) {
             boolean success = initNewGame();
             if(!success) {
-                Minigame.getInstance().getLogger().warning("Failed to initialize game instance");
+                logger.warning("Failed to initialize game instance");
             }
         }
     }
@@ -45,7 +48,7 @@ public class GamePool {
 
     public void killGame(Game game) {
         if (!instances.contains(game)) {
-            Minigame.getInstance().getLogger().severe("Could not kill existing game because game instance was not " +
+            logger.severe("Could not kill existing game because game instance was not " +
                     "found in pool. It is possible that the game instance was not properly initialized with pool. Contact Developer.");
             return;
         }
