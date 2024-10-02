@@ -2,11 +2,11 @@ package com.matthew.plugin.phases.state;
 
 public abstract class BasePhase {
 
-    public abstract void onStart();
+    public abstract void start();
 
-    public abstract void onUpdate();
+    public abstract void update();
 
     public abstract boolean canEnd();
 
-    public abstract void onEnd();
+    public abstract void end();
 }

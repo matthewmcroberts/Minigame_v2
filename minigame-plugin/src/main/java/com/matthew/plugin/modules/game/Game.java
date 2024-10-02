@@ -27,5 +27,5 @@ public abstract class Game {
         return false;
     }
 
-    public abstract void start();
+    public abstract void init();
 }

@@ -2,12 +2,12 @@ package com.matthew.plugin.phases.state;
 
 public class EndPhase extends BasePhase {
     @Override
-    public void onStart() {
+    public void start() {
 
     }
 
     @Override
-    public void onUpdate() {
+    public void update() {
 
     }
 
@@ -17,7 +17,7 @@ public class EndPhase extends BasePhase {
     }
 
     @Override
-    public void onEnd() {
+    public void end() {
 
     }
 }
