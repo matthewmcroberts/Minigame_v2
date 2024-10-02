@@ -3,14 +3,24 @@ package com.matthew.plugin.modules.game;
 import com.matthew.plugin.arena.Arena;
 import com.matthew.plugin.arena.ArenaState;
 import com.matthew.plugin.Team;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class GameArena implements Arena {
+
+    private final Set<UUID> players;
+
+    public GameArena() {
+        players = new HashSet<>();
+    }
 
     @Override
     public String getName() {
@@ -40,6 +50,21 @@ public class GameArena implements Arena {
     @Override
     public void init(World world) {
 
+    }
+
+    @Override
+    public Player getPlayer(Player player) {
+        for(UUID uuid : players) {
+            if(uuid.equals(player.getUniqueId())) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Set<UUID> getPlayers() {
+        return Set.of();
     }
 
     @Override
@@ -74,12 +99,12 @@ public class GameArena implements Arena {
 
     @Override
     public boolean addPlayer(Player player) {
-        return false;
+        return players.add(player.getUniqueId());
     }
 
     @Override
     public boolean removePlayer(Player player) {
-        return false;
+        return players.remove(player.getUniqueId());
     }
 
     @Override
@@ -145,5 +170,15 @@ public class GameArena implements Arena {
     @Override
     public World getWorld() {
         return null;
+    }
+
+    @Override
+    public void sendMessage(Component message) {
+        for (UUID playerUuid : players) {
+            Player player = Bukkit.getPlayer(playerUuid);
+            if (player != null) {
+                player.sendMessage(message);
+            }
+        }
     }
 }

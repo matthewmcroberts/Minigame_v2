@@ -19,11 +19,11 @@ public class TeamDeathMatchGame extends Game {
     public TeamDeathMatchGame(GamePool pool) {
         this.pool = pool;
         this.machine = new PhaseMachine(
-                new CountdownPhase(),
-                new GamePhase(),
-                new EndPhase()
+                new CountdownPhase(this),
+                new GamePhase(this),
+                new EndPhase(this)
         );
-        init();
+        //init();
     }
 
     //start will get called once canStart method returns True. Can start method is called everytime GameJoinEvent is fired

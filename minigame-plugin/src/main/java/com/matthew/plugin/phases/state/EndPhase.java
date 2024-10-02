@@ -1,6 +1,12 @@
 package com.matthew.plugin.phases.state;
 
+import com.matthew.plugin.modules.game.Game;
+
 public class EndPhase extends BasePhase {
+    public EndPhase(Game game) {
+        super(game);
+    }
+
     @Override
     public void start() {
 
@@ -12,12 +18,12 @@ public class EndPhase extends BasePhase {
     }
 
     @Override
-    public boolean canEnd() {
-        return false;
+    public void end() {
+
     }
 
     @Override
-    public void end() {
-
+    public long getUpdateInterval() {
+        return 0;
     }
 }

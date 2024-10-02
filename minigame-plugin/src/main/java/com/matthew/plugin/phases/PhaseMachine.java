@@ -24,8 +24,6 @@ public class PhaseMachine {
 
     private final List<BukkitTask> tasks;
 
-    private final long updateInterval;
-
     private int currentPhase;
 
     //Boolean determining whether next phase is to be skipped
@@ -34,14 +32,12 @@ public class PhaseMachine {
     public PhaseMachine(long updateInterval, BasePhase... phases) {
         this.phases = new ArrayList<>(List.of(phases));
         this.tasks = new ArrayList<>();
-        this.updateInterval = updateInterval;
         this.currentPhase = 0;
         this.skipping = false;
     }
     public PhaseMachine(BasePhase... phases) {
         this.phases = new ArrayList<>(List.of(phases));
         this.tasks = new ArrayList<>();
-        this.updateInterval = 1;
         this.currentPhase = 0;
         this.skipping = false;
     }
@@ -70,12 +66,7 @@ public class PhaseMachine {
             return;
         }
         phases.get(currentPhase).start();
-        BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin,
-                this::onUpdate,
-                0L,
-                updateInterval);
-        tasks.add(task);
-        currentPhase++;
+        schedulePhaseUpdate();
     }
 
     //Will need to keep in mind synchronization of threads and conflicting concurrent main thread modifications
@@ -85,11 +76,6 @@ public class PhaseMachine {
             return;
         }
 
-        if(currentPhase >= phases.size()) {
-            tasks.forEach(BukkitTask::cancel);
-            onEnd();
-        }
-
         if(skipping) {
             currentPhase++;
             skipping = false;
@@ -97,9 +83,15 @@ public class PhaseMachine {
         }
 
         if(phases.get(currentPhase).canEnd()) {
+            if(currentPhase + 1 >= phases.size()) {
+                tasks.forEach(BukkitTask::cancel);
+                onEnd();
+                return;
+            }
             phases.get(currentPhase).end(); //end current phase
             currentPhase++; //move to next phase
             phases.get(currentPhase).start(); //start next phase
+            schedulePhaseUpdate(); //reschedule the new phase's update interval
             return; //return and it will come back to onupdate
         }
 
@@ -111,5 +103,15 @@ public class PhaseMachine {
             return;
         }
         phases.get(currentPhase).end();
+    }
+
+    private void schedulePhaseUpdate() {
+        tasks.forEach(BukkitTask::cancel);
+        tasks.clear();
+
+        long updateInterval = phases.get(currentPhase).getUpdateInterval();
+
+        BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin, this::onUpdate, 0L, updateInterval);
+        tasks.add(task);
     }
 }

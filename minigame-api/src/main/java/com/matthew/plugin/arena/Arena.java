@@ -1,12 +1,14 @@
 package com.matthew.plugin.arena;
 
 import com.matthew.plugin.Team;
+import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface Arena {
@@ -25,6 +27,10 @@ public interface Arena {
     boolean isReSpawning(UUID player);
 
     void init(World world);
+
+    Player getPlayer(Player player);
+
+    Set<UUID> getPlayers();
 
     Team getTeam(Player player);
 
@@ -68,4 +74,6 @@ public interface Arena {
     void destroy();
 
     World getWorld();
+
+    void sendMessage(Component message);
 }
