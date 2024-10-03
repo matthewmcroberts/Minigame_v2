@@ -7,7 +7,6 @@ import com.matthew.plugin.phases.state.CountdownPhase;
 import com.matthew.plugin.phases.state.EndPhase;
 import com.matthew.plugin.phases.state.GamePhase;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 public class TeamDeathMatchGame extends Game {
@@ -23,10 +22,8 @@ public class TeamDeathMatchGame extends Game {
                 new GamePhase(this),
                 new EndPhase(this)
         );
-        //init();
     }
 
-    //start will get called once canStart method returns True. Can start method is called everytime GameJoinEvent is fired
     @Override
     public void init() {
         machine.onStart();
