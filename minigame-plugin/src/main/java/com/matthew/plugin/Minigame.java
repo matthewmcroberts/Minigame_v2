@@ -44,7 +44,7 @@ public class Minigame extends JavaPlugin {
 
         //Init game pool(s)
         getLogger().info("Initializing game pool(s)...");
-        pool = new GamePool(1, TeamDeathMatchGame::new);
+        pool = new GamePool(5, TeamDeathMatchGame::new);
 
         //Populate game pool(s)
         getLogger().info("Populating game pool(s)...");

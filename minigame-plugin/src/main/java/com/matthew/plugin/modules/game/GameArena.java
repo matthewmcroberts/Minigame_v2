@@ -89,7 +89,7 @@ public class GameArena implements Arena {
 
     @Override
     public boolean isFull() {
-        return false;
+        return getMaxPlayers() <= players.size();
     }
 
     @Override

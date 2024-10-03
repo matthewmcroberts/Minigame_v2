@@ -5,6 +5,8 @@ import com.matthew.plugin.commands.structure.BaseCommand;
 import com.matthew.plugin.modules.game.Game;
 import com.matthew.plugin.modules.game.GameModule;
 import com.matthew.plugin.modules.manager.ModuleManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -54,7 +56,7 @@ public class GameCommand extends BaseCommand {
             }
             gameModule.addToGame(player);
             Game game = gameModule.getGame(player);
-            logger.info(game.getArena().getPlayers().toString());
+            logger.info("Game: " + game.toString() + " | Players: " + game.getArena().getPlayers().toString());
         });
         commandActions.put("leave", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
@@ -64,7 +66,7 @@ public class GameCommand extends BaseCommand {
             }
             Game game = gameModule.getGame(player);
             gameModule.removeFromGame(player);
-            logger.info(game.getArena().getPlayers().toString());
+            logger.info("Game: " + game.toString() + " | Players: " + game.getArena().getPlayers().toString());
         });
         commandActions.put("start", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
@@ -74,6 +76,21 @@ public class GameCommand extends BaseCommand {
             }
 
             //start the game the player is currently in
+        });
+        commandActions.put("list", (uuid, args) -> {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player == null) {
+                logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'list' command action");
+                return;
+            }
+
+            int counter = 1;
+            TextComponent.Builder message = Component.text();
+            for(Game game: gameModule.getPool().getInstances()) {
+                message.append(Component.text("Game " + counter + ": " + game.getArena().getPlayers().size() + "\n"));
+                counter++;
+            }
+            player.sendMessage(message);
         });
     }
 

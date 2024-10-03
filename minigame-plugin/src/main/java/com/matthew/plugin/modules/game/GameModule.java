@@ -2,6 +2,7 @@ package com.matthew.plugin.modules.game;
 
 import com.matthew.plugin.Module;
 import com.matthew.plugin.modules.game.pool.GamePool;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.bukkit.entity.Player;
@@ -11,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class GameModule implements Module {
 
     @Setter
+    @Getter
     private GamePool pool;
 
     private final JavaPlugin plugin;

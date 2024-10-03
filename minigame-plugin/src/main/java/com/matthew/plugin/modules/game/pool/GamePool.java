@@ -50,8 +50,12 @@ public class GamePool {
             if(game.getArena().isFull()) {
                 continue;
             }
-            game.getArena().addPlayer(player);
+            boolean success = game.getArena().addPlayer(player);
             logger.info(game.getArena().getPlayers().toString());
+
+            if(success) {
+                break;
+            }
         }
     }
 
