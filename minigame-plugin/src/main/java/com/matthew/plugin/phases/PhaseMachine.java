@@ -2,6 +2,7 @@ package com.matthew.plugin.phases;
 
 import com.matthew.plugin.Minigame;
 import com.matthew.plugin.phases.state.BasePhase;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -86,6 +87,9 @@ public class PhaseMachine {
             if(currentPhase + 1 >= phases.size()) {
                 tasks.forEach(BukkitTask::cancel);
                 onEnd();
+                for(BasePhase phase : phases) {
+                    phase.getGame().getArena().sendMessage(Component.text("Ending all phases"));
+                }
                 return;
             }
             phases.get(currentPhase).end(); //end current phase

@@ -2,6 +2,9 @@ package com.matthew.plugin.commands;
 
 import com.matthew.plugin.Minigame;
 import com.matthew.plugin.commands.structure.BaseCommand;
+import com.matthew.plugin.modules.game.Game;
+import com.matthew.plugin.modules.game.GameModule;
+import com.matthew.plugin.modules.manager.ModuleManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,19 +13,35 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.function.BiConsumer;
 import java.util.logging.Logger;
 
 public class GameCommand extends BaseCommand {
 
     private final Logger logger = Minigame.getInstance().getLogger();
 
+    private final GameModule gameModule;
+
     public GameCommand() {
         super("game.use");
+        this.gameModule = ModuleManager.getInstance().getRegisteredModule(GameModule.class);
     }
 
     @Override
     protected boolean execute(Player player, String[] args) {
-        return false;
+        String actionArg = args[0].toLowerCase();
+
+        if (args.length == 1) {
+            BiConsumer<UUID, String[]> action = commandActions.get(actionArg);
+            if (action != null) {
+                action.accept(player.getUniqueId(), args);
+                return true;
+            }
+        }
+
+        messageModule.sendMessage(player, "usage");
+        return true;
     }
 
     @Override
@@ -30,23 +49,27 @@ public class GameCommand extends BaseCommand {
         commandActions.put("join", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
             if (player == null) {
-                logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'set' for rank command.");
+                logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'join' command action");
                 return;
             }
-           //add player to an open game
+            gameModule.addToGame(player);
+            Game game = gameModule.getGame(player);
+            logger.info(game.getArena().getPlayers().toString());
         });
         commandActions.put("leave", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
             if (player == null) {
-                logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'set' for rank command.");
+                logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'leave' command action");
                 return;
             }
-            //remove player from current game
+            Game game = gameModule.getGame(player);
+            gameModule.removeFromGame(player);
+            logger.info(game.getArena().getPlayers().toString());
         });
         commandActions.put("start", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
             if (player == null) {
-                logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'set' for rank command.");
+                logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'start' command action");
                 return;
             }
 

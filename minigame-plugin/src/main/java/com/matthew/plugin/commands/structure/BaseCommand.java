@@ -35,7 +35,7 @@ public abstract class BaseCommand implements TabExecutor {
         Player player = sender instanceof Player ? (Player) sender : null;
 
         if (player == null) {
-            Bukkit.getLogger().info("Sender must be a player");
+            //Bukkit.getLogger().info("Sender must be a player");
             return true;
         }
 

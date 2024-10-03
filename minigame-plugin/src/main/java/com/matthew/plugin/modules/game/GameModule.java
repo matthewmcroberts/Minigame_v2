@@ -1,15 +1,16 @@
 package com.matthew.plugin.modules.game;
 
 import com.matthew.plugin.Module;
-import com.matthew.plugin.TeamDeathMatchGame;
 import com.matthew.plugin.modules.game.pool.GamePool;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.Bukkit;
+import lombok.Setter;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @RequiredArgsConstructor
 public class GameModule implements Module {
 
+    @Setter
     private GamePool pool;
 
     private final JavaPlugin plugin;
@@ -17,6 +18,23 @@ public class GameModule implements Module {
 //    public Game initNewGame() {
 //        return pool.initNewGame();
 //    }
+
+    public void addToGame(final Player player) {
+        pool.addPlayer(player);
+    }
+
+    public void removeFromGame(final Player player) {
+        pool.removePlayer(player);
+    }
+
+    public Game getGame(final Player player) {
+        for(Game game: pool.getInstances()) {
+            if(game.getArena().getPlayers().contains(player.getUniqueId())) {
+                return game;
+            }
+        }
+        return null;
+    }
 
     @Override
     public void setUp() {

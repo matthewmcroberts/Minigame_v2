@@ -1,12 +1,14 @@
 package com.matthew.plugin.phases.state;
 
 import com.matthew.plugin.modules.game.Game;
+import lombok.Getter;
 
 public abstract class BasePhase {
 
     private boolean canEnd;
 
-    protected Game game;
+    @Getter
+    private final Game game;
 
     public BasePhase(Game game) {
         this.game = game;

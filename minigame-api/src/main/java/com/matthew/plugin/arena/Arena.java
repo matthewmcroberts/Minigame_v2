@@ -40,6 +40,8 @@ public interface Arena {
 
     void changeState(ArenaState state);
 
+    boolean isFull();
+
     int getMaxPlayers();
 
     int getMaxPlayersInTeam();

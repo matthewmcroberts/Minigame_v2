@@ -64,7 +64,7 @@ public class GameArena implements Arena {
 
     @Override
     public Set<UUID> getPlayers() {
-        return Set.of();
+        return players;
     }
 
     @Override
@@ -88,8 +88,13 @@ public class GameArena implements Arena {
     }
 
     @Override
+    public boolean isFull() {
+        return false;
+    }
+
+    @Override
     public int getMaxPlayers() {
-        return 0;
+        return 1; //hardcoded for testing
     }
 
     @Override

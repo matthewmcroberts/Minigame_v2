@@ -4,6 +4,7 @@ import com.matthew.plugin.Minigame;
 import com.matthew.plugin.modules.game.Game;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +41,31 @@ public class GamePool {
                 logger.warning("Failed to initialize game instance");
             }
         }
+        logger.info(instances.toString());
+    }
+
+    //TODO: Checks for if player is in a game
+    public void addPlayer(final Player player) {
+        for(Game game : instances) {
+            if(game.getArena().isFull()) {
+                continue;
+            }
+            game.getArena().addPlayer(player);
+            logger.info(game.getArena().getPlayers().toString());
+        }
+    }
+
+    //TODO: Checks for if player is in a game
+    public void removePlayer(final Player player) {
+        for(Game game : instances) {
+            if(game.getArena().getPlayers().contains(player.getUniqueId())) {
+                game.getArena().removePlayer(player);
+            }
+        }
     }
 
     public boolean initNewGame() {
+        logger.info("Initializing new game instances");
         return instances.add(gameFunction.apply(this));
     }
 
