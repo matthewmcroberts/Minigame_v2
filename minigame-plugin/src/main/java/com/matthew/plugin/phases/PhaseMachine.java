@@ -92,6 +92,9 @@ public class PhaseMachine {
                 }
                 return;
             }
+
+            //TODO: Some of this logic should be in the onEnd method
+
             phases.get(currentPhase).end(); //end current phase
             currentPhase++; //move to next phase
             phases.get(currentPhase).start(); //start next phase
