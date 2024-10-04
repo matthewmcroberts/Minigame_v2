@@ -13,11 +13,13 @@ public class TeamDeathMatchGame extends Game {
 
     private final GamePool pool;
 
-    private final PhaseMachine machine;
-
     public TeamDeathMatchGame(GamePool pool) {
         this.pool = pool;
-        this.machine = new PhaseMachine(
+    }
+
+    @Override
+    protected PhaseMachine createPhaseMachine() {
+        return new PhaseMachine(
                 new CountdownPhase(this),
                 new GamePhase(this),
                 new EndPhase(this)
@@ -26,6 +28,6 @@ public class TeamDeathMatchGame extends Game {
 
     @Override
     public void init() {
-        machine.onStart();
+        getMachine().onStart();
     }
 }

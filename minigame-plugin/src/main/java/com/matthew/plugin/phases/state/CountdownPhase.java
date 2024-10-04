@@ -24,8 +24,9 @@ public class CountdownPhase extends BasePhase {
 
     @Override
     public void start() {
+        this.seconds = 10;
         getGame().getArena().sendMessage(
-                Component.text("Countdown started")
+                Component.text("Countdown started!")
                         .color(NamedTextColor.YELLOW)
         );
     }
@@ -35,9 +36,10 @@ public class CountdownPhase extends BasePhase {
         if (seconds <= 0) {
             setCanEnd(true);
         } else {
-            if(getGame().getArena().getMaxPlayers() <= getGame().getArena().getPlayers().size()) {
+            if (getGame().getArena().getMaxPlayers() <= getGame().getArena().getPlayers().size()) {
+                getGame().getArena().sendMessage(Component.text("Game starting in " + seconds));
                 seconds--;
-            } else if(seconds != 10) {
+            } else if (seconds != 10) {
                 seconds = 10;
             }
         }
@@ -45,14 +47,9 @@ public class CountdownPhase extends BasePhase {
 
     @Override
     public void end() {
-        for (UUID playerUuid : getGame().getArena().getPlayers()) {
-            Player player = Bukkit.getPlayer(playerUuid);
-            if (player != null) {
-                getGame().getArena().sendMessage(
-                        Component.text("Countdown ended, moving to next phase!")
+        getGame().getArena().sendMessage(
+                Component.text("Countdown ended, moving to next phase!")
                         .color(NamedTextColor.YELLOW)
-                );
-            }
-        }
+        );
     }
 }

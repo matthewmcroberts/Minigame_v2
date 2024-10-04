@@ -38,6 +38,10 @@ public class GameModule implements Module {
         return null;
     }
 
+    public boolean isInGame(final Player player) {
+        return getGame(player) != null;
+    }
+
     @Override
     public void setUp() {
         plugin.getLogger().info("Setting up game pool...");

@@ -54,9 +54,13 @@ public class GameCommand extends BaseCommand {
                 logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'join' command action");
                 return;
             }
+
+            if(gameModule.isInGame(player)) {
+                messageModule.sendMessage(player, "ingame");
+                return;
+            }
             gameModule.addToGame(player);
-            Game game = gameModule.getGame(player);
-            logger.info("Game: " + game.toString() + " | Players: " + game.getArena().getPlayers().toString());
+            messageModule.sendMessage(player, "joingame");
         });
         commandActions.put("leave", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
@@ -64,9 +68,13 @@ public class GameCommand extends BaseCommand {
                 logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'leave' command action");
                 return;
             }
-            Game game = gameModule.getGame(player);
+
+            if(!gameModule.isInGame(player)) {
+                messageModule.sendMessage(player, "notingame");
+                return;
+            }
             gameModule.removeFromGame(player);
-            logger.info("Game: " + game.toString() + " | Players: " + game.getArena().getPlayers().toString());
+            messageModule.sendMessage(player, "leavegame");
         });
         commandActions.put("start", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
@@ -74,6 +82,14 @@ public class GameCommand extends BaseCommand {
                 logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'start' command action");
                 return;
             }
+
+            if(!gameModule.isInGame(player)) {
+                messageModule.sendMessage(player, "notingame");
+                return;
+            }
+
+            gameModule.getGame(player).getMachine().onStart();
+            messageModule.sendMessage(player, "gamestart");
 
             //start the game the player is currently in
         });
@@ -84,11 +100,15 @@ public class GameCommand extends BaseCommand {
                 return;
             }
 
-            int counter = 1;
             TextComponent.Builder message = Component.text();
-            for(Game game: gameModule.getPool().getInstances()) {
-                message.append(Component.text("Game " + counter + ": " + game.getArena().getPlayers().size() + "\n"));
-                counter++;
+            int gameCount = gameModule.getPool().getInstances().size();
+
+            for (int i = 0; i < gameCount; i++) {
+                Game game = gameModule.getPool().getInstances().get(i);
+                message.append(Component.text("Game " + (i + 1) + ": " + game.getArena().getPlayers().size()));
+                if (i < gameCount - 1) {
+                    message.append(Component.text("\n"));
+                }
             }
             player.sendMessage(message);
         });

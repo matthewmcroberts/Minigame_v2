@@ -1,5 +1,6 @@
 package com.matthew.plugin.modules.game;
 
+import com.matthew.plugin.phases.PhaseMachine;
 import lombok.Getter;
 
 @Getter
@@ -7,8 +8,11 @@ public abstract class Game {
 
     private final GameArena arena;
 
+    private final PhaseMachine machine;
+
     public Game() {
         arena = new GameArena();
+        this.machine = createPhaseMachine();
     }
 
     public boolean isPvp() {
@@ -26,6 +30,8 @@ public abstract class Game {
     public boolean kill() {
         return false;
     }
+
+    protected abstract PhaseMachine createPhaseMachine();
 
     public abstract void init();
 }

@@ -13,3 +13,18 @@ usage: "<red>Incorrect usage.</red>"
 
 # <0> = Target player's name
 playernotfound: "<gray>Player</gray> <yellow>'<0>'</yellow> <gray>not found.</gray>"
+
+
+#
+# Game
+#
+
+joingame: "<gray>Joined game</gray>"
+
+leavegame: "<gray>Left game</gray>"
+
+ingame: "<gray>You are already in a game</gray>"
+
+notingame: "<gray>You are not currently in a game. Type</gray> <yellow>/game join</yellow> <gray>to join a game!</gray>"
+
+gamestart: "<yellow>Game started!</yellow>"

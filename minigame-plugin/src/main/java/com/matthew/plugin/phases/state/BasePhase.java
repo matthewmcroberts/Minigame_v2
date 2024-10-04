@@ -12,6 +12,7 @@ public abstract class BasePhase {
 
     public BasePhase(Game game) {
         this.game = game;
+        this.canEnd = false;
     }
 
     protected void setCanEnd(boolean canEnd) {
