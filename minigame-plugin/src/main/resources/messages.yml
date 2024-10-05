@@ -28,3 +28,5 @@ ingame: "<gray>You are already in a game</gray>"
 notingame: "<gray>You are not currently in a game. Type</gray> <yellow>/game join</yellow> <gray>to join a game!</gray>"
 
 gamestart: "<yellow>Game started!</yellow>"
+
+countdown: "<gray>Game starting in</gray> <yellow><0></yellow>"
