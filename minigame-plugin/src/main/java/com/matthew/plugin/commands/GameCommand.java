@@ -88,10 +88,7 @@ public class GameCommand extends BaseCommand {
                 return;
             }
 
-            gameModule.getGame(player).getMachine().onStart();
-            messageModule.sendMessage(player, "gamestart");
-
-            //start the game the player is currently in
+            gameModule.getGame(player).start();
         });
         commandActions.put("list", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
