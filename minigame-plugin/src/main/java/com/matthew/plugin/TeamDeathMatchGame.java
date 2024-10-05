@@ -33,4 +33,9 @@ public class TeamDeathMatchGame extends Game {
 
     @Override
     public void forceStart() {}
+
+    @Override
+    public void stop() {
+
+    }
 }

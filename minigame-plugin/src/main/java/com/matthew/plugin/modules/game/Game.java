@@ -42,4 +42,9 @@ public abstract class Game {
      * Skips initial phase and starts next phase
      */
     public abstract void forceStart();
+
+    /**
+     * Skip to final phase and trigger end method
+     */
+    public abstract void stop();
 }
