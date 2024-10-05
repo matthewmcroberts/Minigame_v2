@@ -29,4 +29,6 @@ notingame: "<gray>You are not currently in a game. Type</gray> <yellow>/game joi
 
 gamestart: "<yellow>Game started!</yellow>"
 
+gamestop: "<yellow>Game stopped!</yellow>"
+
 countdown: "<gray>Game starting in</gray> <yellow><0></yellow>"
