@@ -24,11 +24,9 @@ public class CountdownPhase extends BasePhase {
 
     @Override
     public void start() {
+        //pre game phase logic goes here
         this.seconds = 10;
-        getGame().getArena().sendMessage(
-                Component.text("Countdown started!")
-                        .color(NamedTextColor.YELLOW)
-        );
+        setCanEnd(false);
     }
 
     @Override
@@ -37,7 +35,8 @@ public class CountdownPhase extends BasePhase {
             setCanEnd(true);
         } else {
             if (getGame().getArena().getMaxPlayers() <= getGame().getArena().getPlayers().size()) {
-                getGame().getArena().sendMessage(Component.text("Game starting in " + seconds));
+                Component countdownMessage = messageModule.buildMessage("countdown", seconds);
+                getGame().getArena().sendMessage(countdownMessage);
                 seconds--;
             } else if (seconds != 10) {
                 seconds = 10;
@@ -47,9 +46,6 @@ public class CountdownPhase extends BasePhase {
 
     @Override
     public void end() {
-        getGame().getArena().sendMessage(
-                Component.text("Countdown ended, moving to next phase!")
-                        .color(NamedTextColor.YELLOW)
-        );
+
     }
 }

@@ -1,10 +1,14 @@
 package com.matthew.plugin.phases.state;
 
 import com.matthew.plugin.modules.game.Game;
+import com.matthew.plugin.modules.manager.ModuleManager;
+import com.matthew.plugin.modules.messages.MessageModule;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
 public class GamePhase extends BasePhase {
+
+    private final MessageModule messageModule = ModuleManager.getInstance().getRegisteredModule(MessageModule.class);
 
     private int seconds;
 
@@ -16,7 +20,9 @@ public class GamePhase extends BasePhase {
     @Override
     public void start() {
         this.seconds = 10;
-        getGame().getArena().sendMessage(Component.text("Game phase started").color(NamedTextColor.YELLOW));
+        setCanEnd(false);
+        Component startMessage = messageModule.buildMessage("gamestart");
+        getGame().getArena().sendMessage(startMessage);
     }
 
     @Override

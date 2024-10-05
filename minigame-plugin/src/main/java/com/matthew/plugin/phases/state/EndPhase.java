@@ -16,6 +16,7 @@ public class EndPhase extends BasePhase {
     @Override
     public void start() {
         this.seconds = 10;
+        setCanEnd(false);
         getGame().getArena().sendMessage(Component.text("End phase started!").color(NamedTextColor.YELLOW));
     }
 

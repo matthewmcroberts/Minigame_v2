@@ -1,9 +1,13 @@
 package com.matthew.plugin.phases.state;
 
 import com.matthew.plugin.modules.game.Game;
+import com.matthew.plugin.modules.manager.ModuleManager;
+import com.matthew.plugin.modules.messages.MessageModule;
 import lombok.Getter;
 
 public abstract class BasePhase {
+
+    protected MessageModule messageModule = ModuleManager.getInstance().getRegisteredModule(MessageModule.class);
 
     private boolean canEnd;
 
