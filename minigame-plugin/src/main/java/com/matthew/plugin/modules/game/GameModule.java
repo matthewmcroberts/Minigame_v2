@@ -38,6 +38,15 @@ public class GameModule implements Module {
         return null;
     }
 
+    public Game getGame(final String id) {
+        for(Game game: pool.getInstances()) {
+            if(game.getId().equals(id)) {
+                return game;
+            }
+        }
+        return null;
+    }
+
     public boolean isInGame(final Player player) {
         return getGame(player) != null;
     }

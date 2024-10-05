@@ -90,6 +90,34 @@ public class GameCommand extends BaseCommand {
 
             gameModule.getGame(player).start();
         });
+        commandActions.put("forcestart", (uuid, args) -> {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player == null) {
+                logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'start' command action");
+                return;
+            }
+
+            if(!gameModule.isInGame(player)) {
+                messageModule.sendMessage(player, "notingame");
+                return;
+            }
+
+            gameModule.getGame(player).forceStart();
+        });
+        commandActions.put("stop", (uuid, args) -> {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player == null) {
+                logger.warning("Player (sender) with UUID " + uuid + " was not online when running 'start' command action");
+                return;
+            }
+
+            if(!gameModule.isInGame(player)) {
+                messageModule.sendMessage(player, "notingame");
+                return;
+            }
+
+            gameModule.getGame(player).stop();
+        });
         commandActions.put("list", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
             if (player == null) {

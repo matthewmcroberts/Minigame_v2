@@ -2,6 +2,7 @@ package com.matthew.plugin.arena;
 
 import com.matthew.plugin.Team;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -69,13 +70,19 @@ public interface Arena {
     @Nullable
     Team getWinner();
 
+    World getWorld();
+
+    void teleportAllToSpawn();
+
+    void teleportToSpawn(Player player);
+
+    Location getSpawnLocation();
+
+    void sendMessage(Component message);
+
     void disable();
 
     void restart();
 
     void destroy();
-
-    World getWorld();
-
-    void sendMessage(Component message);
 }

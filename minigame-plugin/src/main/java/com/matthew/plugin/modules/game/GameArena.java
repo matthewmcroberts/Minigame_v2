@@ -5,6 +5,7 @@ import com.matthew.plugin.arena.ArenaState;
 import com.matthew.plugin.Team;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -18,8 +19,14 @@ public class GameArena implements Arena {
 
     private final Set<UUID> players;
 
-    public GameArena() {
+    private final Location playerSpawnLoc;
+
+    private final World world;
+
+    public GameArena(Location playerSpawnLoc) {
         players = new HashSet<>();
+        this.playerSpawnLoc = playerSpawnLoc;
+        this.world = playerSpawnLoc.getWorld();
     }
 
     @Override
@@ -174,7 +181,27 @@ public class GameArena implements Arena {
 
     @Override
     public World getWorld() {
-        return null;
+        return world;
+    }
+
+    @Override
+    public void teleportAllToSpawn() {
+        players.forEach(player -> {
+            Player bukkitPlayer = Bukkit.getPlayer(player);
+            if(bukkitPlayer != null) {
+                bukkitPlayer.teleport(getSpawnLocation());
+            }
+        });
+    }
+
+    @Override
+    public void teleportToSpawn(Player player) {
+        player.teleport(getSpawnLocation());
+    }
+
+    @Override
+    public Location getSpawnLocation() {
+        return playerSpawnLoc.clone();
     }
 
     @Override

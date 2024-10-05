@@ -18,7 +18,21 @@ public class GamePhase extends BasePhase {
     }
 
     @Override
+    public long getUpdateInterval() {
+        return 20;
+    }
+
+    @Override
+    public String getName() {
+        return "Game";
+    }
+
+    @Override
     public void start() {
+        if(game.getMachine().isSkipping()) {
+            return;
+        }
+
         this.seconds = 10;
         setCanEnd(false);
         Component startMessage = messageModule.buildMessage("gamestart");
@@ -42,10 +56,5 @@ public class GamePhase extends BasePhase {
     @Override
     public void end() {
         getGame().getArena().sendMessage(Component.text("Game phase ended, moving to next phase!").color(NamedTextColor.YELLOW));
-    }
-
-    @Override
-    public long getUpdateInterval() {
-        return 20;
     }
 }

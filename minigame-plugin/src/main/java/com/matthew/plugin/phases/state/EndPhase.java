@@ -14,7 +14,21 @@ public class EndPhase extends BasePhase {
     }
 
     @Override
+    public long getUpdateInterval() {
+        return 20;
+    }
+
+    @Override
+    public String getName() {
+        return "End";
+    }
+
+    @Override
     public void start() {
+        if(game.getMachine().isSkipping()) {
+            return;
+        }
+
         this.seconds = 10;
         setCanEnd(false);
         getGame().getArena().sendMessage(Component.text("End phase started!").color(NamedTextColor.YELLOW));
@@ -25,8 +39,8 @@ public class EndPhase extends BasePhase {
         if (seconds <= 0) {
             setCanEnd(true);
         } else {
-            if(getGame().getArena().getMaxPlayers() <= getGame().getArena().getPlayers().size()) {
-                getGame().getArena().sendMessage(Component.text("End phase ending " + seconds));
+            if(arena.getMaxPlayers() <= arena.getPlayers().size()) {
+                game.getArena().sendMessage(Component.text("End phase ending " + seconds));
                 seconds--;
             } else if(seconds != 10) {
                 seconds = 10;
@@ -36,11 +50,6 @@ public class EndPhase extends BasePhase {
 
     @Override
     public void end() {
-        getGame().getArena().sendMessage(Component.text("End phase ending!").color(NamedTextColor.YELLOW));
-    }
-
-    @Override
-    public long getUpdateInterval() {
-        return 20;
+        game.stop();
     }
 }

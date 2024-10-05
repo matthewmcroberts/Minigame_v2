@@ -2,6 +2,7 @@ package com.matthew.plugin.phases;
 
 import com.matthew.plugin.Minigame;
 import com.matthew.plugin.phases.state.BasePhase;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -21,9 +22,15 @@ import java.util.List;
 public class PhaseMachine {
 
     private final JavaPlugin plugin = Minigame.getInstance();
+
+    @Getter
     private final List<BasePhase> phases;
+
     private final List<BukkitTask> tasks = new ArrayList<>();
+
     private int currentPhase = 0;
+
+    @Getter
     private boolean skipping = false;
 
     public PhaseMachine(long updateInterval, BasePhase... phases) {
@@ -63,7 +70,7 @@ public class PhaseMachine {
         }
 
         if (skipping) {
-            plugin.getLogger().warning("Skipping phase: " + currentPhase);
+            plugin.getLogger().warning("Skipping phase: " + phases.get(currentPhase).getName());
             skipping = false;
             moveToNextPhase();
             return;
@@ -80,6 +87,13 @@ public class PhaseMachine {
         if (!phases.isEmpty() && currentPhase < phases.size()) {
             phases.get(currentPhase).end();
         }
+    }
+
+    public void stop() {
+        cancelAllTasks(); //important, stop update from executing again while machine's stop logic executes
+        phases.get(currentPhase).end(); //ensure that current phase is properly cleaned up
+        currentPhase = 0;
+        skipping = false;
     }
 
     private void schedulePhaseUpdate() {

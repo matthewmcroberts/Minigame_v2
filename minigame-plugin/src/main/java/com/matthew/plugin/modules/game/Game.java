@@ -1,17 +1,25 @@
 package com.matthew.plugin.modules.game;
 
+import com.matthew.plugin.arena.Arena;
+import com.matthew.plugin.modules.manager.ModuleManager;
+import com.matthew.plugin.modules.messages.MessageModule;
 import com.matthew.plugin.phases.PhaseMachine;
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 @Getter
 public abstract class Game {
 
-    private final GameArena arena;
+    protected final Arena arena;
 
-    private final PhaseMachine machine;
+    protected MessageModule messageModule = ModuleManager.getInstance().getRegisteredModule(MessageModule.class);
 
+    protected final PhaseMachine machine;
+
+    //TODO: Create a more dynamic way of getting the world for a game arena
     public Game() {
-        arena = new GameArena();
+        arena = new GameArena(new Location(Bukkit.getWorld("world"), 252, 84, 100));
         this.machine = createPhaseMachine();
     }
 
@@ -33,6 +41,8 @@ public abstract class Game {
 
     protected abstract PhaseMachine createPhaseMachine();
 
+    public abstract String getId();
+
     /**
      * Starts initial phase
      */
@@ -44,7 +54,7 @@ public abstract class Game {
     public abstract void forceStart();
 
     /**
-     * Skip to final phase and trigger end method
+     * Execute end of game cleanup. If called before final phase finishes, the game will stop abruptly.
      */
     public abstract void stop();
 }
