@@ -33,5 +33,13 @@ public abstract class Game {
 
     protected abstract PhaseMachine createPhaseMachine();
 
-    public abstract void init();
+    /**
+     * Starts initial phase
+     */
+    public abstract void start();
+
+    /**
+     * Skips initial phase and starts next phase
+     */
+    public abstract void forceStart();
 }

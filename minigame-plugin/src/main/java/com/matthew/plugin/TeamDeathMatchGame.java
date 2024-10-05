@@ -27,7 +27,10 @@ public class TeamDeathMatchGame extends Game {
     }
 
     @Override
-    public void init() {
+    public void start() {
         getMachine().onStart();
     }
+
+    @Override
+    public void forceStart() {}
 }
