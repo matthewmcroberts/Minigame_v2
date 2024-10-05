@@ -30,6 +30,9 @@ public class PhaseMachine {
 
     private int currentPhase = 0;
 
+    //TODO: Implement isRunning checks for when game stops or starts
+    private boolean isRunning = false;
+
     @Getter
     private boolean skipping = false;
 
