@@ -31,4 +31,8 @@ gamestart: "<yellow>Game started!</yellow>"
 
 gamestop: "<yellow>Game stopped!</yellow>"
 
+running: "<gray>The game has already been started!</gray>"
+
+notrunning: "<gray>The game is not currently running</gray>"
+
 countdown: "<gray>Game starting in</gray> <yellow><0></yellow>"
