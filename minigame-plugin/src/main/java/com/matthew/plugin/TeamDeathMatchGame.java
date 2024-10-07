@@ -7,7 +7,6 @@ import com.matthew.plugin.phases.state.CountdownPhase;
 import com.matthew.plugin.phases.state.EndPhase;
 import com.matthew.plugin.phases.state.GamePhase;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 
 @Getter
 public class TeamDeathMatchGame extends Game {
@@ -49,11 +48,8 @@ public class TeamDeathMatchGame extends Game {
     }
 
     @Override
-    public void stop() {
+    public void forcestop() {
         machine.stop();
-        arena.teleportAllToSpawn();
-        Component stopMessage = messageModule.buildMessage("gamestop");
-        arena.sendMessage(stopMessage);
     }
 
     private void init() {

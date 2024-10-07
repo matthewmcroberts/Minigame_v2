@@ -88,7 +88,14 @@ public class GameCommand extends BaseCommand {
                 return;
             }
 
-            gameModule.getGame(player).start();
+            Game game = gameModule.getGame(player);
+
+            if(game.getMachine().isRunning()) {
+               messageModule.sendMessage(player, "running");
+               return;
+            }
+
+            game.start();
         });
         commandActions.put("forcestart", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
@@ -102,7 +109,14 @@ public class GameCommand extends BaseCommand {
                 return;
             }
 
-            gameModule.getGame(player).forceStart();
+            Game game = gameModule.getGame(player);
+
+            if(game.getMachine().isRunning()) {
+                messageModule.sendMessage(player, "running");
+                return;
+            }
+
+            game.forceStart();
         });
         commandActions.put("stop", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);
@@ -116,7 +130,14 @@ public class GameCommand extends BaseCommand {
                 return;
             }
 
-            gameModule.getGame(player).stop();
+            Game game = gameModule.getGame(player);
+
+            if(!game.getMachine().isRunning()) {
+                messageModule.sendMessage(player, "notrunning");
+                return;
+            }
+
+            game.forcestop();
         });
         commandActions.put("list", (uuid, args) -> {
             Player player = Bukkit.getPlayer(uuid);

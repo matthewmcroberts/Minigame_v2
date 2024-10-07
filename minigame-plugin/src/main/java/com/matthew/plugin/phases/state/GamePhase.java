@@ -14,7 +14,7 @@ public class GamePhase extends BasePhase {
 
     public GamePhase(Game game) {
         super(game);
-        this.seconds = 10;
+        this.seconds = 5;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class GamePhase extends BasePhase {
             return;
         }
 
-        this.seconds = 10;
+        this.seconds = 5;
         setCanEnd(false);
         Component startMessage = messageModule.buildMessage("gamestart");
         getGame().getArena().sendMessage(startMessage);
@@ -47,8 +47,8 @@ public class GamePhase extends BasePhase {
             if(getGame().getArena().getMaxPlayers() <= getGame().getArena().getPlayers().size()) {
                 getGame().getArena().sendMessage(Component.text("Game phase ending " + seconds));
                 seconds--;
-            } else if(seconds != 10) {
-                seconds = 10;
+            } else if(seconds != 5) {
+                seconds = 5;
             }
         }
     }

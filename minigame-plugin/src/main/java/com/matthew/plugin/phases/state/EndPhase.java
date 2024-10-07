@@ -1,5 +1,6 @@
 package com.matthew.plugin.phases.state;
 
+import com.matthew.plugin.Minigame;
 import com.matthew.plugin.modules.game.Game;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -10,7 +11,7 @@ public class EndPhase extends BasePhase {
 
     public EndPhase(Game game) {
         super(game);
-        this.seconds = 10;
+        this.seconds = 5;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class EndPhase extends BasePhase {
             return;
         }
 
-        this.seconds = 10;
+        this.seconds = 5;
         setCanEnd(false);
         getGame().getArena().sendMessage(Component.text("End phase started!").color(NamedTextColor.YELLOW));
     }
@@ -42,14 +43,19 @@ public class EndPhase extends BasePhase {
             if(arena.getMaxPlayers() <= arena.getPlayers().size()) {
                 game.getArena().sendMessage(Component.text("End phase ending " + seconds));
                 seconds--;
-            } else if(seconds != 10) {
-                seconds = 10;
+            } else if(seconds != 5) {
+                seconds = 5;
             }
         }
     }
 
     @Override
     public void end() {
-        game.stop();
+        //necessary game cleanup goes here
+        arena.teleportAllToSpawn();
+        Component stopMessage = messageModule.buildMessage("gamestop");
+        arena.sendMessage(stopMessage);
+
+        //TODO: reset arena, reset game, etc.
     }
 }

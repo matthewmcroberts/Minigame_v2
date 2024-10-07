@@ -56,5 +56,5 @@ public abstract class Game {
     /**
      * Execute end of game cleanup. If called before final phase finishes, the game will stop abruptly.
      */
-    public abstract void stop();
+    public abstract void forcestop();
 }

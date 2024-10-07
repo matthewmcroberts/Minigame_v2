@@ -3,6 +3,7 @@ package com.matthew.plugin.phases;
 import com.matthew.plugin.Minigame;
 import com.matthew.plugin.phases.state.BasePhase;
 import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -30,8 +31,12 @@ public class PhaseMachine {
 
     private int currentPhase = 0;
 
-    //TODO: Implement isRunning checks for when game stops or starts
-    private boolean isRunning = false;
+    @Getter
+    @Setter
+    private boolean stopped = false;
+
+    @Getter
+    private boolean running = false;
 
     @Getter
     private boolean skipping = false;
@@ -56,6 +61,14 @@ public class PhaseMachine {
         skipping = true;
     }
 
+    public BasePhase getCurrentPhase() {
+        return phases.get(currentPhase);
+    }
+
+    public int getCurrentPhaseIndex() {
+        return currentPhase;
+    }
+
     public void onStart() {
         if (phases.isEmpty()) {
             plugin.getLogger().warning("No phases found! Machine could not be started!");
@@ -64,6 +77,7 @@ public class PhaseMachine {
         currentPhase = 0;
         phases.get(currentPhase).start();
         schedulePhaseUpdate();
+        running = true;
     }
 
     public void onUpdate() {
@@ -87,17 +101,18 @@ public class PhaseMachine {
     }
 
     public void onEnd() {
-        if (!phases.isEmpty() && currentPhase < phases.size()) {
-            phases.get(currentPhase).end();
-        }
+        running = false;
     }
 
     public void stop() {
-        cancelAllTasks(); //important, stop update from executing again while machine's stop logic executes
-        phases.get(currentPhase).end(); //ensure that current phase is properly cleaned up
+        cancelAllTasks();
+
+        phases.getLast().end(); //perform any game cleanup
+        running = false;
         currentPhase = 0;
         skipping = false;
     }
+
 
     private void schedulePhaseUpdate() {
         cancelAllTasks();
@@ -112,6 +127,7 @@ public class PhaseMachine {
 
         if (currentPhase < phases.size()) {
             phases.get(currentPhase).start();
+            schedulePhaseUpdate();
         } else {
             onEnd();
             phases.get(currentPhase - 1).getGame().getArena().sendMessage(
@@ -125,5 +141,9 @@ public class PhaseMachine {
     private void cancelAllTasks() {
         tasks.forEach(BukkitTask::cancel);
         tasks.clear();
+    }
+
+    private boolean isFinalPhase() {
+        return currentPhase == phases.size() - 1;
     }
 }
